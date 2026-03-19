@@ -1,0 +1,226 @@
+# ══════════════════════════════════════════════
+#   .gitignore — Python · FastAPI · ML · Node.js
+# ══════════════════════════════════════════════
+
+
+# ─── PYTHON ───────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# MyPy / Pyright / Ruff
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyright/
+.ruff_cache/
+
+
+# ─── FASTAPI ──────────────────────────────────
+# Local env config
+.env
+.env.*
+!.env.example
+
+# Uvicorn / Gunicorn logs
+*.log
+logs/
+access.log
+error.log
+
+# Alembic migrations (keep structure, ignore auto-gen)
+alembic/versions/__pycache__/
+
+
+# ─── MACHINE LEARNING ─────────────────────────
+# Trained models & weights
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.onnx
+*.pb
+*.tflite
+*.ckpt
+*.bin
+*.safetensors
+saved_models/
+checkpoints/
+model_registry/
+
+# Datasets (never commit raw data)
+data/raw/
+data/processed/
+data/interim/
+data/external/
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.arrow
+*.json.gz
+*.zip
+*.tar.gz
+*.7z
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# MLflow / Weights & Biases / DVC
+mlruns/
+mlartifacts/
+wandb/
+.dvc/
+.dvcignore
+dvc.lock
+
+# Experiment outputs
+outputs/
+results/
+reports/figures/
+figures/
+plots/
+
+# Feature stores / caches
+.feature_cache/
+*.npy
+*.npz
+
+
+# ─── NODE.JS ──────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnp/
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Build output
+dist/
+build/
+.next/
+.nuxt/
+.output/
+out/
+
+# Runtime & cache
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Environment
+.env
+.env.*
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+
+# Testing
+coverage/
+.nyc_output/
+
+
+# ─── EDITORS & OS ─────────────────────────────
+# VSCode
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains (PyCharm, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+
+# ─── DOCKER ───────────────────────────────────
+*.env.docker
+docker-compose.override.yml
+
+
+# ─── SECURITY — NEVER COMMIT THESE ───────────
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+service-account*.json
+*_rsa
+*_rsa.pub
+.secrets

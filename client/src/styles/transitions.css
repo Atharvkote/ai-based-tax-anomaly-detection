@@ -1,0 +1,8 @@
+:root {
+  --motion-fast: 160ms;
+  --motion-base: 240ms;
+}
+
+.smooth-enter {
+  transition: all var(--motion-base) cubic-bezier(0.4, 0, 0.2, 1);
+}
