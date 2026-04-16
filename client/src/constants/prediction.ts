@@ -29,7 +29,7 @@ export const SAMPLE_FORM: FormData = {
   sudden_spike_flag: true,
   same_amount_frequency: '0.76',
   bulk_transaction_ratio: '0.82',
-  tax_gap: '0.91',
+  tax_gap: '35000',
   profit_margin: '0.04',
   discount_frequency: '0.87',
   refund_rate: '0.73',

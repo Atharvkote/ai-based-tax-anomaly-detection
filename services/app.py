@@ -3,8 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from middlewares.error_handler import unhandled_exception_handler
 from routes.ml_routes import router as ml_router
-from schema import Transaction
-from services.ml_service import score_transaction
 from utils.response import success_response
 
 app = FastAPI(title="Tax Evasion ML Service")
@@ -22,9 +20,6 @@ app.include_router(ml_router)
 def home():
     return success_response({"status": "ML Service Running"}, "Service healthy")
 
-
-@app.post("/predict")
-def predict_api(data: Transaction):
-    payload = data.model_dump() if hasattr(data, "model_dump") else data.dict()
-    result = score_transaction(payload)
-    return result
+@app.get("/health")
+def health():
+    return success_response({"status": "ok"}, "Service healthy")

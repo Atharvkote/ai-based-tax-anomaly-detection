@@ -1,13 +1,33 @@
 import React, { Component } from 'react'
+import { AlertTriangle } from 'lucide-react'
 
 export function Toggle({ id, checked, onChange, label }: { id: string; checked: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
-    <button id={id} type="button" role="switch" aria-checked={checked} onClick={() => onChange(!checked)} style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', width: '100%', background: 'none', border: 'none', padding: 0 }}>
-      <div className="toggle-track" style={{ background: checked ? 'var(--accent)' : 'var(--bg-elevated)', border: `1px solid ${checked ? 'var(--accent)' : 'var(--border)'}` }}>
-        <div className="toggle-thumb" style={{ transform: checked ? 'translateX(20px)' : 'translateX(0)' }} />
+    <button 
+      id={id} 
+      type="button" 
+      role="switch" 
+      aria-checked={checked} 
+      onClick={() => onChange(!checked)} 
+      className="flex items-center gap-3 cursor-pointer w-full bg-transparent border-none p-0 group"
+    >
+      <div 
+        className={`w-11 h-6 rounded-full relative transition-colors duration-200 border ${
+          checked ? 'bg-accent border-accent' : 'bg-secondary border-border'
+        }`}
+      >
+        <div 
+          className={`absolute top-1 left-1 w-3.5 h-3.5 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+            checked ? 'translate-x-[20px]' : 'translate-x-0'
+          }`} 
+        />
       </div>
-      <span style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)', textAlign: 'left', flex: 1 }}>{label}</span>
-      {checked && <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--accent)', background: 'var(--accent-light)', padding: '2px 8px', borderRadius: 999 }}>ON</span>}
+      <span className="text-[0.875rem] font-medium text-text-secondary text-left flex-1 group-hover:text-primary transition-colors">{label}</span>
+      {checked && (
+        <span className="text-[0.65rem] font-extrabold text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+          ENABLED
+        </span>
+      )}
     </button>
   )
 }
@@ -16,40 +36,109 @@ export function NumInput({ id, label, value, onChange, error, placeholder, min, 
   id: string; label: string; value: string; onChange: (v: string) => void; error?: string; placeholder?: string; min?: number; max?: number; prefix?: string; hint?: string
 }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-      <label htmlFor={id} style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)' }}>{label}</label>
-      <div style={{ position: 'relative' }}>
-        {prefix && <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', fontSize: '0.875rem', color: 'var(--text-muted)', pointerEvents: 'none' }}>{prefix}</span>}
-        <input id={id} type="number" value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} min={min} max={max} step="any" style={{ width: '100%', background: error ? 'var(--danger-bg)' : 'var(--bg-surface)', border: `1.5px solid ${error ? 'var(--danger)' : 'var(--border)'}`, borderRadius: '0.75rem', padding: prefix ? '10px 12px 10px 28px' : '10px 12px', fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-primary)', outline: 'none', transition: 'border-color 0.2s, box-shadow 0.2s', fontFamily: 'var(--font-sans)' }} />
+    <div className="flex flex-col gap-1.5 flex-1">
+      <label htmlFor={id} className="text-[0.65rem] font-bold uppercase tracking-widest text-text-muted px-0.5">
+        {label}
+      </label>
+      <div className="relative group">
+        {prefix && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[0.875rem] text-text-muted font-medium pointer-events-none group-focus-within:text-accent transition-colors">
+            {prefix}
+          </span>
+        )}
+        <input 
+          id={id} 
+          type="number" 
+          value={value} 
+          onChange={(e) => onChange(e.target.value)} 
+          placeholder={placeholder} 
+          min={min} 
+          max={max} 
+          step="any" 
+          className={`w-full bg-background border-[1.5px] rounded-xl text-[0.875rem] font-medium text-primary outline-none transition-all duration-200 font-sans shadow-sm focus:ring-2 focus:ring-accent/10 ${
+            error 
+              ? 'bg-danger/5 border-danger focus:border-danger' 
+              : 'border-border focus:border-accent'
+          } ${prefix ? 'pl-7 pr-3 py-2.5' : 'px-3 py-2.5'}`} 
+        />
       </div>
-      {hint && !error && <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{hint}</p>}
-      {error && <p style={{ fontSize: '0.7rem', color: 'var(--danger)', fontWeight: 600 }}>⚠ {error}</p>}
+      {hint && !error && <p className="text-[0.65rem] text-text-muted mt-0.5 opacity-80">{hint}</p>}
+      {error && (
+        <p className="flex items-center gap-1.5 text-[0.7rem] text-danger font-bold mt-1">
+          <AlertTriangle size={12} /> {error}
+        </p>
+      )}
     </div>
   )
 }
 
 export function RiskBadge({ level }: { level: 'LOW' | 'MEDIUM' | 'HIGH' }) {
-  const cfg = { LOW: ['var(--success-bg)', 'var(--success)'], MEDIUM: ['var(--warning-bg)', 'var(--warning)'], HIGH: ['var(--danger-bg)', 'var(--danger)'] }[level]
-  return <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 14px', borderRadius: 999, background: cfg[0], color: cfg[1], fontWeight: 700, fontSize: '0.78rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}><span className="animate-dot-pulse" style={{ width: 8, height: 8, borderRadius: '50%', background: cfg[1], display: 'inline-block' }} />{level} Risk</span>
+  const configs = {
+    LOW: { bg: 'bg-success/10', text: 'text-success', dot: 'bg-success', label: 'LOW RISK' },
+    MEDIUM: { bg: 'bg-warning/10', text: 'text-warning', dot: 'bg-warning', label: 'ELEVATED' },
+    HIGH: { bg: 'bg-danger/10', text: 'text-danger', dot: 'bg-danger', label: 'CRITICAL' }
+  }
+  const config = configs[level] || configs.LOW
+  
+  return (
+    <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${config.bg} ${config.text} font-extrabold text-[0.7rem] tracking-widest border border-current opacity-90`}>
+      <span className={`w-2 h-2 rounded-full animate-dot-pulse ${config.dot}`} />
+      {config.label}
+    </span>
+  )
 }
 
 export function CircleRing({ value, color, size = 72, stroke = 6 }: { value: number; color: string; size?: number; stroke?: number }) {
   const r = (size - stroke * 2) / 2
   const circ = 2 * Math.PI * r
   const offset = circ - circ * Math.min(value, 1)
+  
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: 'rotate(-90deg)' }}>
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--bg-elevated)" strokeWidth={stroke} />
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)' }} />
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
+      <circle 
+        cx={size / 2} 
+        cy={size / 2} 
+        r={r} 
+        fill="none" 
+        stroke="var(--bg-elevated)" 
+        strokeWidth={stroke} 
+      />
+      <circle 
+        cx={size / 2} 
+        cy={size / 2} 
+        r={r} 
+        fill="none" 
+        stroke={color} 
+        strokeWidth={stroke} 
+        strokeDasharray={circ} 
+        strokeDashoffset={offset} 
+        strokeLinecap="round" 
+        className="transition-[stroke-dashoffset] duration-1000 ease-out"
+      />
     </svg>
   )
 }
 
 export class ReportBoundary extends Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  constructor(p: { children: React.ReactNode }) { super(p); this.state = { hasError: false } }
-  static getDerivedStateFromError() { return { hasError: true } }
+  constructor(p: { children: React.ReactNode }) { 
+    super(p)
+    this.state = { hasError: false } 
+  }
+  
+  static getDerivedStateFromError() { 
+    return { hasError: true } 
+  }
+  
   render() {
-    if (this.state.hasError) return <div style={{ padding: 32, textAlign: 'center', color: 'var(--danger)' }}><p style={{ fontWeight: 700 }}>Report error - please retry</p></div>
+    if (this.state.hasError) {
+      return (
+        <div className="p-8 text-center bg-danger/5 rounded-xl border border-danger/20 text-danger space-y-2">
+          <AlertTriangle size={32} className="mx-auto" />
+          <p className="font-bold">Execution Context Error</p>
+          <p className="text-xs opacity-80 leading-relaxed">Failed to render prediction report. Please check if all 15 parameters are valid and try again.</p>
+        </div>
+      )
+    }
     return this.props.children
   }
 }

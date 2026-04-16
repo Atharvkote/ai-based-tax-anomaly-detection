@@ -17,4 +17,13 @@ export const mlService = {
     }
     return body
   },
+
+  async healthCheck(): Promise<boolean> {
+    try {
+      const response = await api.get('/health', { timeout: 4000 })
+      return response.status === 200
+    } catch {
+      return false
+    }
+  },
 }

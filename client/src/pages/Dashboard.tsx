@@ -12,15 +12,12 @@ import type { PredictPayload } from '@/types/prediction'
 
 function SectionLabel({ label }: { label: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '0 0 1.5rem 0' }}>
-      <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
-      <span style={{
-        fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase',
-        letterSpacing: '0.14em', color: 'var(--text-muted)', whiteSpace: 'nowrap',
-      }}>
+    <div className="flex items-center gap-3 mb-6">
+      <div className="flex-1 h-[1px] bg-border" />
+      <span className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-text-muted whitespace-nowrap">
         {label}
       </span>
-      <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+      <div className="flex-1 h-[1px] bg-border" />
     </div>
   )
 }
@@ -39,51 +36,39 @@ export default function Dashboard() {
   }, [validate, payload, predict])
 
   return (
-    <div style={{ background: 'var(--bg-base)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="bg-background  min-h-screen flex flex-col">
       <Navbar apiStatus={apiStatus} />
 
       {/* Page header */}
-      <div style={{
-        background: 'var(--bg-surface)', borderBottom: '1px solid var(--border)',
-        paddingTop: 62,  // offset for fixed navbar
-      }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '2rem 1.5rem 1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-            <div>
-              <p style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-dark)', marginBottom: 6 }}>
+      <div className="bg-card border-b border-border pt-[62px]">
+        <div className="max-w-[1280px] mx-auto p-6 sm:p-8">
+          <div className="flex items-end justify-between flex-wrap gap-3">
+            <div className="space-y-1">
+              <p className="text-[0.72rem] font-bold uppercase tracking-widest text-accent mb-1">
                 Risk Intelligence
               </p>
-              <h1 style={{
-                fontFamily: 'var(--font-display)', fontWeight: 800,
-                fontSize: 'clamp(1.5rem, 3vw, 2rem)', letterSpacing: '-0.03em',
-                color: 'var(--text-primary)', lineHeight: 1.15,
-              }}>
+              <h1 className="font-extrabold text-2xl sm:text-3xl tracking-tight text-primary leading-tight">
                 Transaction Risk Analyzer
               </h1>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: 6 }}>
+              <p className="text-[0.85rem] text-text-secondary">
                 Submit 15 parameters to get an instant ML + rule-based risk assessment
               </p>
             </div>
+
             {/* Mini stats */}
-            <div style={{ display: 'flex', gap: 12 }}>
+            <div className="flex gap-3">
               {status === 'loading' ? <StatsSkeleton /> : [
                 { label: 'Total Analyzed', value: stats.total },
                 { label: 'High Risk', value: stats.highRisk },
                 { label: 'Suspicious', value: stats.suspicious },
               ].map(s => (
-                <div key={s.label} style={{
-                  background: 'var(--bg-elevated)', borderRadius: '0.875rem',
-                  border: '1px solid var(--border)', padding: '0.75rem 1.25rem',
-                  textAlign: 'center', minWidth: 80,
-                }}>
-                  <div className="score-digit" style={{
-                    fontSize: '1.5rem', fontWeight: 700,
-                    color: s.label === 'Suspicious' && s.value > 0 ? 'var(--danger)' :
-                      s.label === 'High Risk' && s.value > 0 ? 'var(--warning)' : 'var(--text-primary)',
-                  }}>
+                <div key={s.label} className="bg-secondary rounded-[14px] border border-border px-5 py-3 text-center min-w-[80px] shadow-sm hover:border-accent/40 transition-colors">
+                  <div className={` text-2xl font-bold ${s.label === 'Suspicious' && s.value > 0 ? 'text-danger' :
+                    s.label === 'High Risk' && s.value > 0 ? 'text-warning' : 'text-primary'
+                    }`}>
                     {s.value}
                   </div>
-                  <div style={{ fontSize: '0.67rem', color: 'var(--text-muted)', fontWeight: 600, marginTop: 2 }}>
+                  <div className="text-[0.67rem] text-text-muted font-bold mt-0.5 uppercase tracking-wide">
                     {s.label}
                   </div>
                 </div>
@@ -94,15 +79,12 @@ export default function Dashboard() {
       </div>
 
       {/* Main content */}
-      <main style={{ flex: 1, maxWidth: 1280, margin: '0 auto', padding: '2rem 1.5rem', width: '100%' }}>
+      <main className="flex-1 max-w-[1280px] mx-auto p-6 sm:p-8 w-full">
         {/* Analyzer grid */}
         <SectionLabel label="Analyzer" />
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1fr 1fr',
-          gap: 20, alignItems: 'start',
-        }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* LEFT: sticky form */}
-          <div style={{ position: 'sticky', top: 78 }}>
+          <div className="lg:sticky lg:top-[82px] z-10 bg-background/80 backdrop-blur-sm rounded-xl">
             <TransactionForm
               form={form} errors={errors} setField={setField}
               loadSample={loadSample} resetForm={resetForm}
@@ -110,13 +92,17 @@ export default function Dashboard() {
             />
           </div>
           {/* RIGHT: report */}
-          <ReportPanel status={status} result={result} payload={lastPayload} />
+          <div className="min-h-[400px]">
+            <ReportPanel status={status} result={result} payload={lastPayload} />
+          </div>
         </div>
 
         {/* History */}
-        <div style={{ marginTop: 40 }}>
+        <div className="mt-12">
           <SectionLabel label="Prediction History" />
-          <HistoryTable history={history} onClear={clearHistory} isLoading={status === 'loading'} />
+          <div className="overflow-hidden rounded-xl border border-border shadow-sm">
+            <HistoryTable history={history} onClear={clearHistory} isLoading={status === 'loading'} />
+          </div>
         </div>
       </main>
 

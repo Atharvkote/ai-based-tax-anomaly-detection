@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { mlService } from '@/services/ml.service'
 import { formatTimestamp } from '@/utils/prediction'
 import { useAppStore } from '@/store/app.store'
@@ -11,6 +11,13 @@ export function usePrediction() {
   const setApiStatus = useAppStore((s) => s.dashboard.setApiStatus)
   const setResult = useAppStore((s) => s.dashboard.setResult)
   const addHistoryEntry = useAppStore((s) => s.dashboard.addHistoryEntry)
+
+  // Check API health on mount
+  useEffect(() => {
+    mlService.healthCheck().then((ok) => {
+      setApiStatus(ok ? 'live' : 'demo')
+    })
+  }, [setApiStatus])
 
   const predict = useCallback(async (payload: PredictPayload) => {
     setStatus('loading')

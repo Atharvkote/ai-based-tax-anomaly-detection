@@ -29,11 +29,15 @@ export function useTransactionForm() {
     if (!form.amount || Number.isNaN(+form.amount) || +form.amount <= 0) e.amount = 'Enter a valid amount'
     if (form.transaction_velocity === '' || Number.isNaN(+form.transaction_velocity)) e.transaction_velocity = 'Required'
     if (form.amount_vs_avg_ratio === '' || Number.isNaN(+form.amount_vs_avg_ratio)) e.amount_vs_avg_ratio = 'Required'
+
+    // tax_gap is a monetary value, not a ratio — just validate it's a non-negative number
+    if (form.tax_gap === '' || Number.isNaN(+form.tax_gap) || +form.tax_gap < 0) e.tax_gap = 'Enter a valid amount'
+
+    // These are true 0-1 ratios
     const ratios: (keyof FormData)[] = [
       'cash_ratio_monthly',
       'same_amount_frequency',
       'bulk_transaction_ratio',
-      'tax_gap',
       'profit_margin',
       'discount_frequency',
       'refund_rate',
