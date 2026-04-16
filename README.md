@@ -1,5 +1,7 @@
 # Tax Anomaly Detection System
 
+![Image](https://res.cloudinary.com/dgz7hqbl9/image/upload/q_auto/f_auto/v1776369228/Screenshot_2026-04-17_012256_pfzfny.png)
+
 TaxSentinel is an enterprise-grade financial compliance platform that utilizes machine learning and deterministic rules to detect tax evasion and transaction anomalies in real-time. Built with a modern tech stack, it provides financial analysts with a sophisticated dashboard to analyze transaction risks, visualize anomaly scores, and maintain an audit trail of predictions.
 
 ## Project Architecture
