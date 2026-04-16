@@ -93,6 +93,7 @@ For detailed information regarding the machine learning models, feature engineer
 ![Images](https://res.cloudinary.com/dgz7hqbl9/image/upload/q_auto/f_auto/v1776369352/Screenshot_2026-04-17_012534_wayn6r.png)
 
 </div>
+
 - **Hybrid Inference**: Combines unsupervised anomaly detection (ML) with expert-defined compliance rules.
 - **Real-Time Analysis**: Instant risk scoring upon transaction submission.
 - **Audit Logging**: Maintains a comprehensive history of all analyzed transactions.
