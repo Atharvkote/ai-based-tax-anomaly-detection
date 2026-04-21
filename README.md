@@ -108,3 +108,9 @@ For detailed information regarding the machine learning models, feature engineer
 4.  **Ensemble Scoring**: Multiple models vote on the anomaly score to reduce false positives.
 5.  **Risk Classification**: Scores are mapped to LOW, MEDIUM, and HIGH risk buckets based on dynamic thresholds.
 
+## Contributors
+
+- Atharva kote
+- Bhushan korde
+- Saraj Naikwade
+- Pranav Mulay
